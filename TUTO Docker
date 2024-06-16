@@ -1,0 +1,25 @@
+Installer docker Lien : https://www.it-connect.fr/installation-pas-a-pas-de-docker-sur-debian-11/
+Commande sur Debian 12: 
+apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common
+
+ curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list
+
+apt-get update
+
+apt-get install docker-ce docker-ce-cli containerd.io
+
+systemctl enable docker
+
+systemctl status docker
+
+Installer docker portainer: https://aymeric-cucherousset.fr/installer-portainer-io-sur-docker/
+Commande : 
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+#connexion en web via ce lien: http://votre-ip:9000
+
+Mise en place du WORDPRESS. Bon ça easy pas besoin de tuto. 
