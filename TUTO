@@ -1,0 +1,41 @@
+Nextcloud: 
+
+1-	Installation des dépendances : 
+apt install apache2 mariadb-server libapache2-mod-php php php-mysql php-cli php-gd php-json php-curl php-mbstring php-intl php-imagick php-xml php-zip php-apcu -y
+2-	Créer la base de données : 
+mysql – u root -p
+
+Ici je créer une base de données nommé « nextcloud » avec un utilisateur nommé « nextclouduser » :
+
+CREATE DATABASE nextcloud;
+CREATE USER 'nextclouduser'@'localhost' IDENTIFIED BY 'nextcloud';
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextclouduser'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+3-	Télécharger nextcloud
+On va ce placer dans le fichier www.
+Commande : cd /var/www
+
+On va ensuite télécharger la dernière version de nextcloud avec cette commande
+wget https://download.nextcloud.com/server/releases/latest.tar.bz2
+On va décompresser le fichier avec cette commande : 
+tar -xjf latest.tar.bz2
+On déplace le dossier nextcloud vers le dossier html
+mv nextcloud /var/www/html/
+
+
+Puis en donne les privilèges : 
+chown -R www-data:www-data /var/www/html/nextcloud
+chmod -R 755 /var/www/html/nextcloud
+export PATH=$PATH:/usr/sbin
+Faire ensuite cette commande pour activer nextcloud : 
+ln -s /etc/apache2/sites-available/nextcloud.conf /etc/apache2/sites-enabled/
+
+Actuellement la page par défaut de votre serveur apache est la page apache2 classique, nous on veut par défaut la page nextcloud, pour remédier au problème on va modifier un fichier de configuration, pour cela faire la commande suivante : 
+nano /etc/apache2/sites-available/000-default.conf
+
+Et sur la ligne DocumentRoot rajouter « /nextcloud » : 
+
+Sur le serveur NextCloud aller dans ce fichier config. PHP situé dans /var/www/html/nextcloud/config   
+
